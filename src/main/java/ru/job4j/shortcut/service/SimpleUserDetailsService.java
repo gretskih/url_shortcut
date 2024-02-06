@@ -5,6 +5,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.job4j.shortcut.model.Site;
 import ru.job4j.shortcut.repository.site.SiteRepository;
@@ -15,10 +16,11 @@ import static java.util.Collections.emptyList;
 @AllArgsConstructor
 public class SimpleUserDetailsService implements UserDetailsService {
     private final SiteRepository siteRepository;
+    private final BCryptPasswordEncoder encoder;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Site site = siteRepository.findByLogin(username).orElseThrow(() -> new UsernameNotFoundException(username));
-        return new User(site.getLogin(), site.getPassword(), emptyList());
+        return new User(site.getLogin(), encoder.encode(site.getPassword()), emptyList());
     }
 }

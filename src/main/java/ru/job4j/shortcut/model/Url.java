@@ -1,21 +1,25 @@
 package ru.job4j.shortcut.model;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Data
+@Builder
 @Entity
 @Table(name = "site_url")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@NoArgsConstructor
+@AllArgsConstructor
 public class Url {
     @Id
     @EqualsAndHashCode.Include
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String url;
     private String code;
     private Long total;
+    @ManyToOne
+    @JoinColumn(name = "site_user_id")
+    private Site site;
 }

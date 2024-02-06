@@ -23,7 +23,4 @@ public class Site {
     private String site;
     private String login;
     private String password;
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "site_user_id")
-    private Set<Url> urls = new HashSet<>();
 }

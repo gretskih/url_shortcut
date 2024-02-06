@@ -29,6 +29,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     public static final String HEADER_STRING = "Authorization";
     public static final String SIGN_UP_URL = "/registration";
     public static final String API_DOCS_URL = "/v3/api-docs";
+    public static final String REDIRECT_URL = "/redirect/**";
 
     private AuthenticationManager auth;
 
