@@ -6,12 +6,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import ru.job4j.shortcut.dto.CodeDto;
+import ru.job4j.shortcut.dto.StatisticsDto;
 import ru.job4j.shortcut.dto.UrlDto;
 import ru.job4j.shortcut.model.Site;
 import ru.job4j.shortcut.model.Url;
 import ru.job4j.shortcut.repository.url.UrlRepository;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -50,6 +53,12 @@ public class SimpleUrlService implements UrlService {
             urlRepository.save(value);
             return new UrlDto(value.getUrl());
         });
+    }
+
+    @Override
+    public List<StatisticsDto> findAll() {
+        var urls = urlRepository.findAll();
+        return urls.stream().map(u -> new StatisticsDto(u.getUrl(), u.getTotal())).collect(Collectors.toList());
     }
 
     private void incrementTotal(Url url) {
