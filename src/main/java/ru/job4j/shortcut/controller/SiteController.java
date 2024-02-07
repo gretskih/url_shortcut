@@ -23,7 +23,6 @@ public class SiteController {
             summary = "Регистрация сайта",
             description = "Позволяет зарегистрировать сайт"
     )
-    @SecurityRequirement(name = "JWT")
     @PostMapping("/registration")
     public ResponseEntity<RegistrationRespDTO> registration(@RequestBody @Valid RegistrationReqDTO registrationReq) {
         return siteService.save(registrationReq)
