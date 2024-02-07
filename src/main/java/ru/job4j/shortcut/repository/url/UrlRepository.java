@@ -2,6 +2,7 @@ package ru.job4j.shortcut.repository.url;
 
 import org.springframework.data.repository.CrudRepository;
 import ru.job4j.shortcut.dto.UrlDto;
+import ru.job4j.shortcut.model.Site;
 import ru.job4j.shortcut.model.Url;
 
 import java.util.List;
@@ -12,5 +13,5 @@ public interface UrlRepository extends CrudRepository<Url, Integer> {
 
     Optional<Url> findByCode(String code);
 
-    List<Url> findAll();
+    List<Url> findAllBySite(Site site);
 }

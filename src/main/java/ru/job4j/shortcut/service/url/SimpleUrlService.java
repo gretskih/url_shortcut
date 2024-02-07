@@ -12,6 +12,8 @@ import ru.job4j.shortcut.model.Site;
 import ru.job4j.shortcut.model.Url;
 import ru.job4j.shortcut.repository.url.UrlRepository;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -56,12 +58,19 @@ public class SimpleUrlService implements UrlService {
     }
 
     @Override
-    public List<StatisticsDto> findAll() {
-        var urls = urlRepository.findAll();
+    public List<StatisticsDto> findAllBySite(Site site) {
+        var urls = urlRepository.findAllBySite(site);
         return urls.stream().map(u -> new StatisticsDto(u.getUrl(), u.getTotal())).collect(Collectors.toList());
     }
 
     private void incrementTotal(Url url) {
         url.setTotal(Math.incrementExact(url.getTotal()));
+    }
+
+    @Override
+    public boolean checkUrl(UrlDto urlDto, String siteUrl) throws URISyntaxException {
+            URI uri = new URI(urlDto.getUrl());
+            String hostName = uri.getHost();
+            return hostName.contains(siteUrl);
     }
 }
