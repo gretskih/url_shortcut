@@ -1,15 +1,11 @@
 package ru.job4j.shortcut.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
-@Data
+@Setter
+@Getter
 @Entity
 @Table(name = "site_user")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)

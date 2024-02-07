@@ -9,11 +9,10 @@ import io.swagger.v3.oas.annotations.security.SecurityScheme;
 @OpenAPIDefinition(
         info = @Info(
                 title = "UrlShortCut Api",
-                description = "UrlShortCut System", version = "1.0.0",
+                description = "Для обеспечения безопасности, ссылки на вашем сайте можно заменить ссылками на наш сервис.", version = "1.0.0",
                 contact = @Contact(
-                        name = "Gretskikh Anatoly",
-                        email = "gretskih@mail.ru",
-                        url = ""
+                        name = "Anatoly",
+                        email = "gretskih@mail.ru"
                 )
         )
 )

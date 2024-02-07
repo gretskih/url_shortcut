@@ -1,6 +1,7 @@
 package ru.job4j.shortcut.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,7 @@ public class SiteController {
             summary = "Регистрация сайта",
             description = "Позволяет зарегистрировать сайт"
     )
+    @SecurityRequirement(name = "JWT")
     @PostMapping("/registration")
     public ResponseEntity<RegistrationRespDTO> registration(@RequestBody @Valid RegistrationReqDTO registrationReq) {
         return siteService.save(registrationReq)

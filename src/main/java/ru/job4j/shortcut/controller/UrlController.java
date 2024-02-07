@@ -1,6 +1,8 @@
 package ru.job4j.shortcut.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -33,6 +35,7 @@ public class UrlController {
             summary = "Регистрация ссылки",
             description = "Позволяет зарегистрировать ссылку и получить ассоциированный код"
     )
+    @SecurityRequirement(name = "JWT")
     @PostMapping("/convert")
     public ResponseEntity<CodeDto> convert(@RequestBody @Valid UrlDto url, Principal siteLogin) {
         var siteOptional = siteService.findByLogin(siteLogin.getName());
@@ -52,11 +55,11 @@ public class UrlController {
 
     @Operation(
             summary = "Переадресация",
-            description = "Позволяет по ассоциированному коду получить ссылку"
+            description = "Позволяет по ассоциированному коду получить ссылку. Доступен без авторизации"
     )
     @GetMapping("/redirect/{code}")
     public ResponseEntity<UrlDto> redirect(@PathVariable @NotBlank(message = "Код не должен быть пустым.")
-                                               String code) {
+                                               @Parameter(description = "Код ссылки") String code) {
         return urlService.findByCode(code)
                 .map(p -> ResponseEntity
                         .status(HttpStatus.FOUND)
@@ -66,8 +69,9 @@ public class UrlController {
 
     @Operation(
             summary = "Статистика",
-            description = "Позволяет получить статистку всех адресов и количество вызовов этого адреса"
+            description = "Позволяет получить список ссылок с количеством обращений"
     )
+    @SecurityRequirement(name = "JWT")
     @GetMapping("/statistic")
     public List<StatisticsDto> statistic(Principal siteLogin) {
         var siteOptional = siteService.findByLogin(siteLogin.getName());

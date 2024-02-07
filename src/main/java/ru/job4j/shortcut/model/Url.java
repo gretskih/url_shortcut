@@ -4,7 +4,8 @@ import lombok.*;
 
 import javax.persistence.*;
 
-@Data
+@Setter
+@Getter
 @Builder
 @Entity
 @Table(name = "site_url")
