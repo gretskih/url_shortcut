@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import ru.job4j.shortcut.dto.CodeDto;
+import ru.job4j.shortcut.dto.ShortCutUrl;
 import ru.job4j.shortcut.dto.StatisticsDto;
 import ru.job4j.shortcut.dto.UrlDto;
 import ru.job4j.shortcut.model.Site;
@@ -51,8 +52,7 @@ public class SimpleUrlService implements UrlService {
     public Optional<UrlDto> findByCode(String code) {
         var urlOptional = urlRepository.findByCode(code);
         return urlOptional.map(value -> {
-            incrementTotal(value);
-            urlRepository.save(value);
+            urlRepository.incrementTotalById(value.getId());
             return new UrlDto(value.getUrl());
         });
     }
@@ -63,14 +63,17 @@ public class SimpleUrlService implements UrlService {
         return urls.stream().map(u -> new StatisticsDto(u.getUrl(), u.getTotal())).collect(Collectors.toList());
     }
 
-    private void incrementTotal(Url url) {
-        url.setTotal(Math.incrementExact(url.getTotal()));
+    public boolean validUri(ShortCutUrl shortCutUrl) {
+        try {
+            new URI(shortCutUrl.getUrl());
+            return true;
+        } catch (URISyntaxException e) {
+            return false;
+        }
     }
 
-    @Override
-    public boolean checkUrl(UrlDto urlDto, String siteUrl) throws URISyntaxException {
-            URI uri = new URI(urlDto.getUrl());
-            String hostName = uri.getHost();
-            return hostName.contains(siteUrl);
+    public boolean validDomain(ShortCutUrl shortCutUrl) {
+        return URI.create(shortCutUrl.getUrl()).getHost().contains(shortCutUrl.getSite());
     }
+
 }

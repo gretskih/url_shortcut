@@ -11,6 +11,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import ru.job4j.shortcut.dto.CodeDto;
+import ru.job4j.shortcut.dto.ShortCutUrl;
 import ru.job4j.shortcut.dto.StatisticsDto;
 import ru.job4j.shortcut.dto.UrlDto;
 import ru.job4j.shortcut.service.site.SiteService;
@@ -39,12 +40,12 @@ public class UrlController {
     @PostMapping("/convert")
     public ResponseEntity<CodeDto> convert(@RequestBody @Valid UrlDto url, Principal siteLogin) {
         var siteOptional = siteService.findByLogin(siteLogin.getName());
-        try {
-            if (!urlService.checkUrl(url, siteOptional.get().getSite())) {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Ссылка не относится к: %s.".formatted(siteOptional.get().getSite()));
-            }
-        } catch (URISyntaxException e) {
+        var shortCutUrl =  new ShortCutUrl(url.getUrl(), siteOptional.get().getSite());
+        if (!urlService.validUri(shortCutUrl)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Синтаксическая ошибка, в ссылке используются недопустимые символы.");
+        }
+        if (!urlService.validDomain(shortCutUrl)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Ссылка не относится к: %s.".formatted(siteOptional.get().getSite()));
         }
         return urlService.save(url, siteOptional.get())
                 .map(p -> ResponseEntity

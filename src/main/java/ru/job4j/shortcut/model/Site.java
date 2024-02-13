@@ -9,14 +9,20 @@ import javax.persistence.*;
 @Entity
 @Table(name = "site_user")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@AllArgsConstructor
 @NoArgsConstructor
 public class Site {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
-    private int id;
+    private long id;
     private String site;
     private String login;
     private String password;
+
+    public Site(String site, String login, String password) {
+        this.id = 0;
+        this.site = site;
+        this.login = login;
+        this.password = password;
+    }
 }

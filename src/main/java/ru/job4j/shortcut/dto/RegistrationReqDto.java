@@ -10,7 +10,7 @@ import javax.validation.constraints.Size;
 
 @Data
 @Schema(description = "Сущность с данными для регистрации сайта")
-public class RegistrationReqDTO {
+public class RegistrationReqDto {
     @Size(min = 5, max = 70, message
             = "Общая длина адреса сайта должна быть не менее 5-и и не более 70-ти символов.")
     @Pattern(regexp = "^(?!-)[A-Za-z0-9-]{2,63}(?<!-)\\.[A-Za-z]{2,6}$",

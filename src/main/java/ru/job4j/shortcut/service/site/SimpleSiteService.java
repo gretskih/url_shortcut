@@ -5,8 +5,8 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
-import ru.job4j.shortcut.dto.RegistrationReqDTO;
-import ru.job4j.shortcut.dto.RegistrationRespDTO;
+import ru.job4j.shortcut.dto.RegistrationReqDto;
+import ru.job4j.shortcut.dto.RegistrationRespDto;
 import ru.job4j.shortcut.model.Site;
 import ru.job4j.shortcut.repository.site.SiteRepository;
 
@@ -22,21 +22,21 @@ public class SimpleSiteService implements SiteService {
     private Integer passwordLength;
 
     @Override
-    public Optional<RegistrationRespDTO> save(RegistrationReqDTO registrationReqDTO) {
+    public Optional<RegistrationRespDto> save(RegistrationReqDto registrationReqDTO) {
         String site = registrationReqDTO.getSite();
         String login = RandomStringUtils.randomAlphanumeric(loginLength);
         String password = RandomStringUtils.randomAlphanumeric(passwordLength);
-        Site siteRow = new Site(0, site, login, password);
+        Site siteRow = new Site(site, login, password);
         try {
             Site siteSave = siteRepository.save(siteRow);
-            RegistrationRespDTO respDTO = new RegistrationRespDTO(
+            RegistrationRespDto respDTO = new RegistrationRespDto(
                     true, siteSave.getLogin(), siteSave.getPassword()
             );
             return Optional.of(respDTO);
         } catch (DataIntegrityViolationException e) {
             var siteFind = siteRepository.findBySite(site);
             if (siteFind.isPresent()) {
-                RegistrationRespDTO respDTO = new RegistrationRespDTO(
+                RegistrationRespDto respDTO = new RegistrationRespDto(
                         false, siteFind.get().getLogin(), siteFind.get().getPassword()
                 );
                 return Optional.of(respDTO);

@@ -1,6 +1,7 @@
 package ru.job4j.shortcut.service.url;
 
 import ru.job4j.shortcut.dto.CodeDto;
+import ru.job4j.shortcut.dto.ShortCutUrl;
 import ru.job4j.shortcut.dto.StatisticsDto;
 import ru.job4j.shortcut.dto.UrlDto;
 import ru.job4j.shortcut.model.Site;
@@ -12,7 +13,9 @@ import java.util.Optional;
 public interface UrlService {
     Optional<CodeDto> save(UrlDto url, Site site);
 
-    boolean checkUrl(UrlDto urlDto, String siteUrl) throws URISyntaxException;
+    boolean validUri(ShortCutUrl shortCutUrl);
+
+    boolean validDomain(ShortCutUrl shortCutUrl);
 
     Optional<UrlDto> findByCode(String code);
 

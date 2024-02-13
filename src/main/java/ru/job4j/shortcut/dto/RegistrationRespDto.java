@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 @Schema(description = "Сущность с данными зарегистрированного сайта")
-public class RegistrationRespDTO {
+public class RegistrationRespDto {
     @Schema(description = "Статус регистрации")
     private boolean registration;
     @Schema(description = "Логин")
