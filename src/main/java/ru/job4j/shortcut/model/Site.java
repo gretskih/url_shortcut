@@ -14,13 +14,12 @@ public class Site {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
-    private long id;
+    private Long id;
     private String site;
     private String login;
     private String password;
 
     public Site(String site, String login, String password) {
-        this.id = 0;
         this.site = site;
         this.login = login;
         this.password = password;

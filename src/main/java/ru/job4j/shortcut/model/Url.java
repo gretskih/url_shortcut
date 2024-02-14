@@ -16,7 +16,7 @@ public class Url {
     @Id
     @EqualsAndHashCode.Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private String url;
     private String code;
     private Long total;

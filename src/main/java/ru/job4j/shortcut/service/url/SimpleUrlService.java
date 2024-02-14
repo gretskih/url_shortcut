@@ -30,7 +30,6 @@ public class SimpleUrlService implements UrlService {
     public Optional<CodeDto> save(UrlDto urlDto, Site site) {
         String code = RandomStringUtils.randomAlphanumeric(codeLength);
         Url url = Url.builder()
-                .id(0)
                 .url(urlDto.getUrl())
                 .code(code)
                 .total(0L)
