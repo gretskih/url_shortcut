@@ -8,7 +8,7 @@ Cервис выполняет преобразование переданной
 ## Стек технологий
 - ![Java 17](https://img.shields.io/badge/Java-17-blue)
 - ![Spring 2.7.12](https://img.shields.io/badge/Spring%20Boot%202.7.12-white?style=flat&logo=Spring)
-- ![Liquibase 4.15.0](https://img.shields.io/badge/Liquibase_4.15.0-white?style=flat&logo=Liquibase&logoColor=blue
+- ![Liquibase 4.23.1](https://img.shields.io/badge/Liquibase_4.23.1-white?style=flat&logo=Liquibase&logoColor=blue
   )
 - ![PostgreSQL 42.3.8](https://img.shields.io/badge/PostgreSQL_42.3.8-white?style=flat&logo=PostgreSQL&logoColor=blue
   )
